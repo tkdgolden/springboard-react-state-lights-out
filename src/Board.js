@@ -55,7 +55,19 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   };
 
   function hasWon() {
-    // TODO: check the board in state to determine whether the player has won.
+    // check the board in state to determine whether the player has won.
+    let r = 0;
+    while (r < nrows) {
+      let c = 0;
+      while (c < ncols) {
+        if (board[r][c] === false) {
+          return false;
+        }
+        c++;
+      }
+      r++;
+    }
+    return true;
   };
 
   function flipCellsAround(coord) {
@@ -73,17 +85,23 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
       // Make a (deep) copy of the oldBoard
       const newBoard = oldBoard.map(row => [...row]);
 
-      // TODO: in the copy, flip this cell and the cells around it
+      // in the copy, flip this cell and the cells around it
       flipCell(y, x, newBoard);
+      flipCell(y + 1, x, newBoard);
+      flipCell(y - 1, x, newBoard);
+      flipCell(y, x + 1, newBoard);
+      flipCell(y, x - 1, newBoard);
 
-      // TODO: return the copy
+      // return the copy
       return newBoard;
     });
   };
 
   // if the game is won, just show a winning msg & render nothing else
 
-  // TODO
+  if (hasWon()) {
+    return (<h1>You Won!</h1>);
+  }
 
   // make table board
 
