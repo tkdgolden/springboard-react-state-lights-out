@@ -33,7 +33,19 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
   function createBoard() {
     let initialBoard = [];
-    // TODO: create array-of-arrays of true/false values
+    let r = 0;
+    while (r < nrows) {
+      let rowArray = [];
+      let c = 0;
+      while (c < ncols) {
+        rowArray.push(true);
+        c++;
+      }
+      initialBoard.push(rowArray);
+      r++;
+    }
+    console.log(initialBoard);
+
     return initialBoard;
   }
 
@@ -67,7 +79,22 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
 
   // make table board
 
-  // TODO
+  return (
+    <table>
+      <tbody>
+        {board.map((row, rowIdx) => <tr>
+          {board[rowIdx].map(
+            (cell, cellIdx) => 
+            <Cell 
+              flipCellsAroundMe={
+                () => flipCellsAround({rowIdx, cellIdx})} 
+              isLit={cell} 
+            />
+          )}
+        </tr>)}
+      </tbody>
+    </table>
+  );
 }
 
 export default Board;
